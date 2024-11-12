@@ -1,0 +1,13 @@
+{% for mcq in mcqs %}
+    <div class="question">
+        <p>{{ mcq.question }}</p>
+        <div class="options">
+            {% for key, value in mcq.options.items %}
+                <label>
+                    <input type="radio" name="question_{{ forloop.counter0 }}" value="{{ key }}">
+                    {{ value }}
+                </label>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
