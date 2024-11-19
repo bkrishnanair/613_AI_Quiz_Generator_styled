@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF for Quiz Generation - ClassNest</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Quiz_Base/css/upload.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">
+                <a href="{% url 'dashboard' %}">
+                    <img src="{% static 'Quiz_Base/images/logo.png' %}" alt="ClassNest Logo">
+                    <span>ClassNest</span>
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="#">Courses</a>
+                {% if is_instructor %}
+                    <a href="#">Create Course</a>
+                {% endif %}
+                <a href="#">AI Quiz Generator</a>
+                <a href="#">Settings</a>
+                <a href="#">Profile</a>
+                <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-btn">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="upload-container">
+            <h2>Upload PDF for Quiz Generation</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="pdf" accept="application/pdf" required>
+                <button type="submit" class="upload-btn">Generate Quiz</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'Quiz_Base/js/upload.js' %}"></script>
+</body>
+</html>

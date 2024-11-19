@@ -1,24 +1,25 @@
 {% block content %}
-<div class="container p-4">
-    <h1 class="text-3xl font-bold mb-8">Quiz - Test Your Knowledge</h1>
+<div class="container quiz-container">
+    <h1 class="quiz-title">Quiz - Test Your Knowledge</h1>
     
-    <!-- Debug information -->
+    <!-- Debug information (hidden) -->
     <div style="display: none;">
         <h2>Debug MCQs:</h2>
         <pre>{{ debug_mcqs|pprint }}</pre>
     </div>
     
+    <!-- Quiz Form -->
     <form method="POST" id="quiz-form">
         {% csrf_token %}
         
         {% for item in questions_data %}
-            <div class="mb-8">
-                <h2 class="text-xl font-bold mb-2">Question {{ forloop.counter }}:</h2>
-                <p class="text-lg mb-4">{{ item.question }}</p>
+            <div class="question-block">
+                <h2 class="question-title">Question {{ forloop.counter }}:</h2>
+                <p class="question-text">{{ item.question }}</p>
                 
-                <div class="pl-4">
+                <div class="options-list">
                     {% for option, text in item.field.field.choices %}
-                        <div class="mb-2">
+                        <div class="option-item">
                             <label>
                                 <input type="radio" name="{{ item.field.name }}" value="{{ option }}" required>
                                 {{ option }}) {{ text }}
@@ -28,45 +29,91 @@
                 </div>
             </div>
         {% endfor %}
-
-        {% comment %} <!-- Add this at the end of the template for debugging -->
-        <h2>Debug: Raw MCQs</h2>
-        <pre>{{ debug_mcqs|pprint }}</pre> {% endcomment %}
-
         
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-            Submit
-        </button>
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">Submit</button>
     </form>
 </div>
 
+<!-- Styles for quiz page -->
 <style>
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-    
-    li {
-        margin-bottom: 0.5rem;
-    }
-    
-    input[type="radio"] {
-        margin-right: 0.5rem;
-    }
-    
-    label {
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-        padding: 0.5rem;
-    }
-    
-    label:hover {
-        background-color: #f3f4f6;
-        border-radius: 0.25rem;
-    }
+/* General body styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f9fc; /* Same background as upload page */
+}
+
+/* Container styling */
+.quiz-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+}
+
+/* Title styling */
+.quiz-title {
+    text-align: center;
+    font-size: 30px; /* Larger font size for title */
+    color: #4A90E2;
+    margin-bottom: 40px; /* Increased space below title */
+}
+
+/* Question block styling */
+.question-block {
+    margin-bottom: 40px; /* Space between questions */
+}
+
+.question-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.question-text {
+    font-size: 18px;
+    line-height: 1.6; /* Increased line height for better readability */
+}
+
+/* Options list styling */
+.options-list {
+    padding-left: 20px; /* Indent options slightly */
+}
+
+.option-item {
+    margin-bottom: 15px; /* Space between options increased */
+}
+
+input[type="radio"] {
+    margin-right: 10px; /* Space between radio button and label text */
+}
+
+label {
+    font-size: 16px;
+}
+
+/* Submit button styling */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #4A90E2; /* Blue button */
+    color: white;
+    border-radius: 8px; /* Rounded corners */
+    border: none;
+}
+
+.submit-btn:hover {
+    background-color: #0e3358; /* Darker blue on hover */
+}
 </style>
 
+<!-- JavaScript for handling form submission -->
 <script>
 document.getElementById('quiz-form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -92,4 +139,5 @@ document.getElementById('quiz-form').addEventListener('submit', function(e) {
     });
 });
 </script>
+
 {% endblock %}

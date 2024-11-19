@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload PDF for Quiz Generation - ClassNest</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'Quiz_Base/css/upload.css' %}">
+</head>
+<body>
+    <div class="main-content">
+        <div class="upload-container">
+            <h2>Upload PDF for Quiz Generation</h2>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="file-input-container">
+                    <input type="file" name="pdf" accept="application/pdf" required>
+                </div>
+                <button type="submit" class="upload-btn">Generate Quiz</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{% static 'Quiz_Base/js/upload.js' %}"></script>
+</body>
+</html>

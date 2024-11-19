@@ -1,0 +1,113 @@
+/* General body styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #fff;
+}
+
+/* Title container styling */
+.title-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.classnest-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4A90E2;
+    text-decoration: none; /* Remove underline */
+    padding: 10px 20px;
+    border: 2px solid #4A90E2; /* Add border */
+    border-radius: 12px; /* Rounded corners */
+}
+
+.classnest-title:hover {
+    background-color: #4A90E2; /* Change background on hover */
+    color: white; /* Change text color on hover */
+}
+
+/* Upload form container */
+.upload-form {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .upload-form {
+    background-color: #1E1E1E;
+}
+
+/* Heading styling */
+h1 {
+    text-align: center;
+    font-size: 28px;
+    color: #4A90E2;
+}
+
+/* File input styling */
+.upload-form input[type="file"] {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.upload-form input[type="file"]:hover {
+    border-color: #4A90E2;
+}
+
+/* Button styling */
+.upload-form button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #4A90E2; /* Blue button */
+    color: white;
+    border-radius: 8px; /* Rounded corners */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.upload-form button:hover {
+    background-color: #0e3358; /* Darker blue on hover */
+}
+
+/* Message styling */
+.message {
+    text-align: center;
+}
+
+.message.loading {
+    color: #4A90E2; /* Blue for loading state */
+}
+
+.message.success {
+    color: green; /* Green for success state */
+}
+
+.message.error {
+    color: red; /* Red for error state */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .upload-form {
+        padding: 20px;
+        max-width: 100%;
+    }
+}

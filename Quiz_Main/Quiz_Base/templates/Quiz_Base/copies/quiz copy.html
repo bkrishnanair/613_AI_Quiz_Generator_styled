@@ -1,0 +1,95 @@
+{% block content %}
+<div class="container p-4">
+    <h1 class="text-3xl font-bold mb-8">Quiz - Test Your Knowledge</h1>
+    
+    <!-- Debug information -->
+    <div style="display: none;">
+        <h2>Debug MCQs:</h2>
+        <pre>{{ debug_mcqs|pprint }}</pre>
+    </div>
+    
+    <form method="POST" id="quiz-form">
+        {% csrf_token %}
+        
+        {% for item in questions_data %}
+            <div class="mb-8">
+                <h2 class="text-xl font-bold mb-2">Question {{ forloop.counter }}:</h2>
+                <p class="text-lg mb-4">{{ item.question }}</p>
+                
+                <div class="pl-4">
+                    {% for option, text in item.field.field.choices %}
+                        <div class="mb-2">
+                            <label>
+                                <input type="radio" name="{{ item.field.name }}" value="{{ option }}" required>
+                                {{ option }}) {{ text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+
+        {% comment %} <!-- Add this at the end of the template for debugging -->
+        <h2>Debug: Raw MCQs</h2>
+        <pre>{{ debug_mcqs|pprint }}</pre> {% endcomment %}
+
+        
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            Submit
+        </button>
+    </form>
+</div>
+
+<style>
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    li {
+        margin-bottom: 0.5rem;
+    }
+    
+    input[type="radio"] {
+        margin-right: 0.5rem;
+    }
+    
+    label {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        padding: 0.5rem;
+    }
+    
+    label:hover {
+        background-color: #f3f4f6;
+        border-radius: 0.25rem;
+    }
+</style>
+
+<script>
+document.getElementById('quiz-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    fetch(window.location.href, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.score !== undefined) {
+            alert(`Your score: ${data.score} out of ${document.querySelectorAll('h2').length}`);
+        } else if (data.error) {
+            alert(`Error: ${data.error}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while submitting the quiz');
+    });
+});
+</script>
+{% endblock %}
